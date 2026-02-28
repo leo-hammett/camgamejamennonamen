@@ -1,3 +1,4 @@
+#if false
 using UnityEngine;
 
 namespace InGraved.Generators
@@ -90,3 +91,4 @@ namespace InGraved.Generators
         float GetDistanceTo(Vector2 position);
     }
 }
+#endif

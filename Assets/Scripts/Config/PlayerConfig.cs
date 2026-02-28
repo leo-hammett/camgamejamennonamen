@@ -1,3 +1,4 @@
+#if false
 using UnityEngine;
 
 namespace InGraved.Config
@@ -46,3 +47,4 @@ namespace InGraved.Config
         public Material trailMaterial;
     }
 }
+#endif

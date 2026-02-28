@@ -1,3 +1,4 @@
+#if false
 using UnityEngine;
 
 namespace InGraved.Config
@@ -34,3 +35,4 @@ namespace InGraved.Config
         public Vector3 cameraOffset = new Vector3(0, 0, -10);
     }
 }
+#endif
