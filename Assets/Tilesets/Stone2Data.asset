@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Stone2Data
   m_EditorClassIdentifier: Assembly-CSharp::TileData
   speedMultiplier: 0.5
-  tile: {fileID: 11400000, guid: cff4431d911be4f109d76563dd5c8ca7, type: 2}
+  tile: {fileID: 11400000, guid: caf0a756295c44c309ab6c653052996b, type: 2}
+  transformsInto: {fileID: 0}

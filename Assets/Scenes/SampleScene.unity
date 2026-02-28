@@ -566,9 +566,17 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8487605665000391004, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
+      propertyPath: stoneRadius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8487605665000391004, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
       propertyPath: stoneTilemap
       value: 
       objectReference: {fileID: 648885993}
+    - target: {fileID: 8487605665000391004, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
+      propertyPath: tileUpdateInterval
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -742,8 +750,6 @@ MonoBehaviour:
   minPointDistance: 0.1
   lineMaterial: {fileID: 2100000, guid: 560f6facf6bdb4481aa97c82cffa8ca9, type: 2}
   baseSpeed: 5
-  tileDataList:
-  - {fileID: 11400000, guid: 3636dc510895c437f8a658f153b81d25, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
