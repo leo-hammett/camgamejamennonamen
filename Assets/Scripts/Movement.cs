@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     // minimum distance the player must travel before a new point is added to the line,
     // prevents adding hundreds of nearly identical points every frame
     [SerializeField] private float minPointDistance = 0.1f;
+    [SerializeField] private Material lineMaterial;
 
     private LineRenderer lineRenderer;
     // stores the world positions of the current line so we can check for self-intersection
@@ -16,9 +17,9 @@ public class Movement : MonoBehaviour
     void Start()
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startWidth = 0.05f;
-        lineRenderer.endWidth = 0.05f;
+        lineRenderer.material = lineMaterial;
+        lineRenderer.startWidth = 1f;
+        lineRenderer.endWidth = 1f;
         StartNewLine();
     }
 
