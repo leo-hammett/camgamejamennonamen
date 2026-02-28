@@ -9,25 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5115bad2fbdf94dd4b5296f0139c30f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 368e48ebf06f444ea8df3fc2314be6b3, type: 3}
   m_Name: MapConfig
-  m_EditorClassIdentifier: Assembly-CSharp::InGraved.Config.GameConfig
-  mapConfig: {fileID: 0}
-  generatorConfig: {fileID: 0}
-  playerConfig: {fileID: 0}
-  difficultyGracePeriod: 30
-  spawnRateIncreasePerMinute: 0.1
-  maxSpawnRateMultiplier: 3
-  pointsPerGeneratorKill: 100
-  pointsPerSecond: 1
-  scoreMultiplierCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  gameOverDelay: 1
-  musicVolume: 0.5
-  sfxVolume: 0.7
-  powerupSpawnRate: 0
-  powerupDuration: 0
+  m_EditorClassIdentifier: Assembly-CSharp::InGraved.Config.MapConfig
+  mapWidth: 100
+  mapHeight: 100
+  tileSize: 1
+  initialStrength: 0
+  strengthBandCount: 10
+  bandColors:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 1, g: 0.9858491, b: 0.9858491, a: 0}
+  cameraFollowSpeed: 5
+  cameraOffset: {x: 0, y: 0, z: -10}
