@@ -1,3 +1,4 @@
+#if false
 using UnityEngine;
 
 namespace InGraved.Core
@@ -33,3 +34,4 @@ namespace InGraved.Core
         bool IsReady { get; }
     }
 }
+#endif

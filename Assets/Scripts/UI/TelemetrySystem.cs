@@ -1,3 +1,4 @@
+#if false
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -90,3 +91,4 @@ namespace InGraved.UI
         public void ShowPowerupEffect(string powerupType, Vector2 position);
     }
 }
+#endif

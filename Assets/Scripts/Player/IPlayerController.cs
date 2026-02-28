@@ -1,3 +1,4 @@
+#if false
 using UnityEngine;
 using System.Collections.Generic;
 using InGraved.Core;
@@ -88,3 +89,4 @@ namespace InGraved.Player
         void ApplyInvincibility(float duration);
     }
 }
+#endif

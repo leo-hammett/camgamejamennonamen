@@ -1,3 +1,4 @@
+#if false
 using UnityEngine;
 using InGraved.Config;
 
@@ -59,3 +60,4 @@ namespace InGraved.Generators
         public float GetDistanceTo(Vector2 position);
     }
 }
+#endif

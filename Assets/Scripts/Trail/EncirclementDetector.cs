@@ -1,3 +1,4 @@
+#if false
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -74,3 +75,4 @@ namespace InGraved.Trail
         public static List<Vector2> FindTrailIntersections(List<Vector2> trail);
     }
 }
+#endif

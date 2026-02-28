@@ -1,3 +1,4 @@
+#if false
 using UnityEngine;
 using InGraved.Config;
 using InGraved.Trail;
@@ -90,3 +91,4 @@ namespace InGraved.Player
         public void ApplyInvincibility(float duration);
     }
 }
+#endif

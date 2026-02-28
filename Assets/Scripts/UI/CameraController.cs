@@ -1,3 +1,4 @@
+#if false
 using UnityEngine;
 using InGraved.Config;
 
@@ -59,3 +60,4 @@ namespace InGraved.UI
         public Vector2 ScreenToWorldPoint(Vector2 screenPos);
     }
 }
+#endif

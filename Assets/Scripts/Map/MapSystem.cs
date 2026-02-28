@@ -1,3 +1,4 @@
+#if false
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using InGraved.Core;
@@ -110,3 +111,4 @@ namespace InGraved.Map
         public void ClearAllStone();
     }
 }
+#endif
