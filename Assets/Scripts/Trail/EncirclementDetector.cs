@@ -1,4 +1,4 @@
-#if false
+
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -153,4 +153,4 @@ namespace InGraved.Trail
         }
     }
 }
-#endif
+

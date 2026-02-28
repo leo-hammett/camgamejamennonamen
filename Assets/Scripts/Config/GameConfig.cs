@@ -1,4 +1,4 @@
-#if false
+
 using UnityEngine;
 
 namespace InGraved.Config
@@ -50,4 +50,4 @@ namespace InGraved.Config
         public float powerupDuration = 0.0f;
     }
 }
-#endif
+

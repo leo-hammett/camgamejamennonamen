@@ -1,4 +1,3 @@
-#if false
 using UnityEngine;
 using InGraved.Config;
 using InGraved.Map;
@@ -182,4 +181,3 @@ namespace InGraved.Core
         GameOver
     }
 }
-#endif
