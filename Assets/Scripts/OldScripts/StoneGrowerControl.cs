@@ -1,10 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 public class StoneGrowerControl : MonoBehaviour
 {
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private float speed = 3f;
+    [SerializeField] private Tilemap stoneTilemap;
+    [SerializeField] private TileBase stoneTile;
+    [SerializeField] private int stoneRadius = 1;
 
     void Start()
     {
@@ -20,6 +24,23 @@ public class StoneGrowerControl : MonoBehaviour
     {
         Vector3 direction = (movement.transform.position - transform.position).normalized;
         transform.position += direction * speed * Time.deltaTime;
+        PaintStone();
+    }
+
+    void PaintStone()
+    {
+        // get the tilemap cell the grower is currently on
+        Vector3Int center = stoneTilemap.WorldToCell(transform.position);
+
+        // paint all cells within stoneRadius
+        for (int x = -stoneRadius; x <= stoneRadius; x++)
+        {
+            for (int y = -stoneRadius; y <= stoneRadius; y++)
+            {
+                if (x * x + y * y <= stoneRadius * stoneRadius)
+                    stoneTilemap.SetTile(center + new Vector3Int(x, y, 0), stoneTile);
+            }
+        }
     }
 
     void HandleLoopClosed(List<Vector2> loopPoints)

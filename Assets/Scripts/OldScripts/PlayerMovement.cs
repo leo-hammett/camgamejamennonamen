@@ -20,8 +20,8 @@ public class PlayerMovement : MonoBehaviour
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = lineMaterial;
-        lineRenderer.startWidth = 0.3f;
-        lineRenderer.endWidth = 0.3f;
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
         StartNewLine();
     }
 
