@@ -14,12 +14,19 @@ public class PlayerMovement : MonoBehaviour
 
     // pair each TileBase with a TileData asset to define its speed multiplier
     [SerializeField] private List<TileData> tileDataList;
-    [SerializeField] private Tilemap tilemap;
+    private Tilemap tilemap;
     private Dictionary<TileBase, TileData> tileDataMap;
 
     private LineRenderer lineRenderer;
     // stores the world positions of the current line so we can check for self-intersection
     private List<Vector2> points = new List<Vector2>();
+    private GameSettings gameSettings;
+
+    void Awake()
+    {
+        gameSettings = Resources.Load<GameSettings>("GameSettings");
+        tilemap = FindFirstObjectByType<Tilemap>();
+    }
 
     void Start()
     {
@@ -31,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         lineRenderer.material = lineMaterial;
         lineRenderer.startWidth = 0.1f;
         lineRenderer.endWidth = 0.1f;
+        transform.position = new Vector3(gameSettings.width/4, gameSettings.height/4, 0);
         StartNewLine();
     }
 

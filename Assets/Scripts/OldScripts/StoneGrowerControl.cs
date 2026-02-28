@@ -4,11 +4,17 @@ using UnityEngine.Tilemaps;
 
 public class StoneGrowerControl : MonoBehaviour
 {
-    [SerializeField] private PlayerMovement movement;
+    private PlayerMovement movement;
     [SerializeField] private float speed = 3f;
-    [SerializeField] private Tilemap stoneTilemap;
+    private Tilemap tilemap;
     [SerializeField] private TileBase stoneTile;
     [SerializeField] private int stoneRadius = 1;
+
+    void Awake()
+    {
+        movement = FindFirstObjectByType<PlayerMovement>();
+        tilemap = FindFirstObjectByType<Tilemap>();
+    }
 
     void Start()
     {
@@ -30,7 +36,7 @@ public class StoneGrowerControl : MonoBehaviour
     void PaintStone()
     {
         // get the tilemap cell the grower is currently on
-        Vector3Int center = stoneTilemap.WorldToCell(transform.position);
+        Vector3Int center = tilemap.WorldToCell(transform.position);
 
         // paint all cells within stoneRadius
         for (int x = -stoneRadius; x <= stoneRadius; x++)
@@ -38,7 +44,7 @@ public class StoneGrowerControl : MonoBehaviour
             for (int y = -stoneRadius; y <= stoneRadius; y++)
             {
                 if (x * x + y * y <= stoneRadius * stoneRadius)
-                    stoneTilemap.SetTile(center + new Vector3Int(x, y, 0), stoneTile);
+                    tilemap.SetTile(center + new Vector3Int(x, y, 0), stoneTile);
             }
         }
     }
