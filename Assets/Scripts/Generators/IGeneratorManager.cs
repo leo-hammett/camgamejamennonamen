@@ -1,4 +1,4 @@
-#if false
+
 using UnityEngine;
 using System.Collections.Generic;
 using InGraved.Core;
@@ -101,4 +101,4 @@ namespace InGraved.Generators
         void SlowAllGenerators(float slowFactor, float duration);
     }
 }
-#endif
+

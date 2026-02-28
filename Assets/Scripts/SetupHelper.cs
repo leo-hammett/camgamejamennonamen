@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 /// <summary>
 /// Helper script to quickly set up the InGraved game scene
@@ -143,8 +146,6 @@ public class InspectorButtonAttribute : PropertyAttribute
 }
 
 #if UNITY_EDITOR
-using UnityEditor;
-
 [CustomPropertyDrawer(typeof(InspectorButtonAttribute))]
 public class InspectorButtonPropertyDrawer : PropertyDrawer
 {

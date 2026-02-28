@@ -1,0 +1,54 @@
+UNITY SETUP CHECKLIST (5 minutes)
+===================================
+
+✅ DONE: All scripts enabled (removed #if false)
+✅ DONE: Configs created (GameConfig, MapConfig, GeneratorConfig, PlayerConfig)
+
+YOUR TURN IN UNITY:
+
+[ ] 1. Open Unity and wait for it to compile
+      - Should compile with no errors now!
+
+[ ] 2. Create Generator Prefab (30 seconds)
+      - GameObject > Create Empty
+      - Name it "GeneratorPrefab"
+      - Add Component > StoneGenerator
+      - Add Component > Sprite Renderer (set color to red)
+      - Drag to Project window to make prefab
+      - Delete from scene
+
+[ ] 3. Link Configs (1 minute)
+      - Select GameConfig in Project
+      - Drag GeneratorConfig into its slot
+      - Drag PlayerConfig into its slot
+      - Select GeneratorConfig
+      - Drag GeneratorPrefab into "Generator Prefab" slot
+
+[ ] 4. Setup Scene (30 seconds)
+      - GameObject > Create Empty > "GameManager"
+      - Add Component > GameManager
+      - Drag GameConfig into its slot
+      
+      - GameObject > Create Empty > "GeneratorManager"
+      - Add Component > GeneratorManager
+      - Drag GeneratorConfig into its slot
+      
+      - Find "Circle" object
+      - Add Component > PlayerController
+      - Add Component > TrailSystem
+      - Tag as "Player"
+      
+      - On Tilemap object
+      - Add Component > MapSystem
+
+[ ] 5. Press Play!
+      - Generators should spawn
+      - Player should move with mouse (existing Movement.cs)
+      - Trail should render (existing Movement.cs)
+
+TROUBLESHOOTING:
+- NullReferenceException? Check configs are linked
+- No generators? Check GeneratorPrefab is assigned
+- Can't see anything? Check camera Z = -10
+
+That's it! The game should be running!

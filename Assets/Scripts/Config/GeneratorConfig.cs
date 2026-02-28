@@ -1,4 +1,4 @@
-#if false
+
 using UnityEngine;
 
 namespace InGraved.Config
@@ -59,4 +59,4 @@ namespace InGraved.Config
         public GameObject spawnEffectPrefab;
     }
 }
-#endif
+

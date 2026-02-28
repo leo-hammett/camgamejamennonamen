@@ -1,4 +1,4 @@
-#if false
+
 using UnityEngine;
 using System.Collections.Generic;
 using InGraved.Core;
@@ -80,4 +80,4 @@ namespace InGraved.Trail
         void ApplyTrailEnhancement(float lengthMultiplier, float duration);
     }
 }
-#endif
+
