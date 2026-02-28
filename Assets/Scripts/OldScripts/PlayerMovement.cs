@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,7 +9,13 @@ public class PlayerMovement : MonoBehaviour
     // prevents adding hundreds of nearly identical points every frame
     [SerializeField] private float minPointDistance = 0.1f;
     [SerializeField] private Material lineMaterial;
+    [SerializeField] private float baseSpeed = 5f;
     public event System.Action<List<Vector2>> OnLoopClosed;
+
+    // pair each TileBase with a TileData asset to define its speed multiplier
+    [SerializeField] private List<TileData> tileDataList;
+    [SerializeField] private Tilemap tilemap;
+    private Dictionary<TileBase, TileData> tileDataMap;
 
     private LineRenderer lineRenderer;
     // stores the world positions of the current line so we can check for self-intersection
@@ -17,6 +23,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        // build lookup dictionary from the two parallel lists
+        tileDataMap = new Dictionary<TileBase, TileData>();
+        for (int i = 0; i < tileDataList.Count; i++)
+            tileDataMap[tileDataList[i].tile] = tileDataList[i];
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = lineMaterial;
         lineRenderer.startWidth = 0.1f;
@@ -31,9 +41,11 @@ public class PlayerMovement : MonoBehaviour
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = transform.position.z;
 
-        // move toward the mouse at constant speed
-        float speed = 5f;
-        transform.position += (mouseWorld - transform.position).normalized * speed * Time.deltaTime;
+        // look up the tile at the player's current position and apply its speed multiplier
+        TileBase currentTile = tilemap.GetTile(tilemap.WorldToCell(transform.position));
+        float speedMultiplier = (currentTile != null && tileDataMap.TryGetValue(currentTile, out TileData data)) ? data.speedMultiplier : 1f;
+
+        transform.position += (mouseWorld - transform.position).normalized * baseSpeed * speedMultiplier * Time.deltaTime;
 
         Vector2 pos = transform.position;
 
