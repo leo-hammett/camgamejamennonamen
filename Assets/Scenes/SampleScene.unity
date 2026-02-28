@@ -677,9 +677,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a959a9a038249aabad048526735cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
   minPointDistance: 0.1
   lineMaterial: {fileID: 2100000, guid: 560f6facf6bdb4481aa97c82cffa8ca9, type: 2}
+  baseSpeed: 5
+  tileDataList:
+  - {fileID: 11400000, guid: 3636dc510895c437f8a658f153b81d25, type: 2}
+  tilemap: {fileID: 648885993}
 --- !u!1 &2129395010
 GameObject:
   m_ObjectHideFlags: 0
