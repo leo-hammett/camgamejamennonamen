@@ -5,7 +5,6 @@ using System.Net.NetworkInformation;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
     // minimum distance the player must travel before a new point is added to the line,
     // prevents adding hundreds of nearly identical points every frame
     [SerializeField] private float minPointDistance = 0.1f;
@@ -33,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
         mouseWorld.z = transform.position.z;
 
         // move toward the mouse at constant speed
+        float speed = 5f;
         transform.position += (mouseWorld - transform.position).normalized * speed * Time.deltaTime;
 
         Vector2 pos = transform.position;
