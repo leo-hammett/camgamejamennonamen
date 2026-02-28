@@ -1,14 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 
-public class Movement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     // minimum distance the player must travel before a new point is added to the line,
     // prevents adding hundreds of nearly identical points every frame
     [SerializeField] private float minPointDistance = 0.1f;
     [SerializeField] private Material lineMaterial;
+    public event System.Action<List<Vector2>> OnLoopClosed;
 
     private LineRenderer lineRenderer;
     // stores the world positions of the current line so we can check for self-intersection
@@ -18,8 +20,8 @@ public class Movement : MonoBehaviour
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = lineMaterial;
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
+        lineRenderer.startWidth = 0.3f;
+        lineRenderer.endWidth = 0.3f;
         StartNewLine();
     }
 
@@ -48,6 +50,7 @@ public class Movement : MonoBehaviour
             {
                 if (SegmentsIntersect(segA, pos, points[i], points[i + 1]))
                 {
+                    OnLoopClosed?.Invoke(new List<Vector2>(points));
                     StartNewLine();
                     return;
                 }
@@ -59,7 +62,6 @@ public class Movement : MonoBehaviour
         lineRenderer.positionCount = points.Count;
         lineRenderer.SetPosition(points.Count - 1, pos);
     }
-
     void StartNewLine()
     {
         points.Clear();
