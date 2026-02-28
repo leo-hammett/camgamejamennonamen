@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8d2243c6e6fe4193845c9d1ed7dc8de, type: 3}
-  m_Name: StoneData
+  m_Name: EdgeData
   m_EditorClassIdentifier: Assembly-CSharp::TileData
-  speedMultiplier: 0.5
-  tile: {fileID: 11400000, guid: cff4431d911be4f109d76563dd5c8ca7, type: 2}
+  speedMultiplier: 0
+  tile: {fileID: 11400000, guid: 57b2784229fdf4463b917a5e58556f12, type: 2}
+  transformsInto: {fileID: 0}

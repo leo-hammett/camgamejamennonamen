@@ -7,17 +7,24 @@ public class StoneGrowerControl : MonoBehaviour
     private PlayerMovement movement;
     [SerializeField] private float speed = 3f;
     private Tilemap tilemap;
-    [SerializeField] private TileBase stoneTile;
+    private List<TileData> tileDataList;
+    private Dictionary<TileBase, TileData> tileDataMap;
+    private Dictionary<Vector3Int, float> tileLastUpdated = new Dictionary<Vector3Int, float>();
     [SerializeField] private int stoneRadius = 1;
+    [SerializeField] private float tileUpdateInterval = 1f;
 
     void Awake()
     {
+        tileDataList = Resources.Load<TileDictionary>("TileDictionary").tileDataList;
         movement = FindFirstObjectByType<PlayerMovement>();
         tilemap = FindFirstObjectByType<Tilemap>();
     }
 
     void Start()
     {
+        tileDataMap = new Dictionary<TileBase, TileData>();
+        for (int i = 0; i < tileDataList.Count; i++)
+            tileDataMap[tileDataList[i].tile] = tileDataList[i];
         movement.OnLoopClosed += HandleLoopClosed;
     }
 
@@ -44,7 +51,16 @@ public class StoneGrowerControl : MonoBehaviour
             for (int y = -stoneRadius; y <= stoneRadius; y++)
             {
                 if (x * x + y * y <= stoneRadius * stoneRadius)
-                    tilemap.SetTile(center + new Vector3Int(x, y, 0), stoneTile);
+                {
+                    Vector3Int tilePos = center + new Vector3Int(x, y, 0);
+                    if (tileLastUpdated.TryGetValue(tilePos, out float lastTime) && Time.time - lastTime < tileUpdateInterval)
+                        continue;
+
+                    TileBase currentTile = tilemap.GetTile(tilePos);
+                    TileBase newTile = (currentTile != null && tileDataMap.TryGetValue(currentTile, out TileData data)) ? data.transformsInto.tile : currentTile;
+                    tilemap.SetTile(tilePos, newTile);
+                    tileLastUpdated[tilePos] = Time.time;
+                }
             }
         }
     }

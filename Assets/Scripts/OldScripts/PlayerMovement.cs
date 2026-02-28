@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public event System.Action<List<Vector2>> OnLoopClosed;
 
     // pair each TileBase with a TileData asset to define its speed multiplier
-    [SerializeField] private List<TileData> tileDataList;
+    private List<TileData> tileDataList;
     private Tilemap tilemap;
     private Dictionary<TileBase, TileData> tileDataMap;
 
@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
+        tileDataList = Resources.Load<TileDictionary>("TileDictionary").tileDataList;
         gameSettings = Resources.Load<GameSettings>("GameSettings");
         tilemap = FindFirstObjectByType<Tilemap>();
     }
@@ -57,16 +58,12 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 pos = transform.position;
 
-        // skip adding a point if we haven't moved far enough yet
-        if (Vector2.Distance(pos, points[points.Count - 1]) < minPointDistance)
-            return;
-
-        // check if the new segment (last point -> current pos) intersects any older segment.
-        // we skip the last 3 segments to avoid false positives from adjacent segments
+        // always check for self-intersection, regardless of distance from last point.
+        // we skip the last 2 segments to avoid false positives from adjacent segments.
         if (points.Count >= 2)
         {
             Vector2 segA = points[points.Count - 1];
-            for (int i = 0; i < points.Count - 3; i++)
+            for (int i = 0; i < points.Count - 2; i++)
             {
                 if (SegmentsIntersect(segA, pos, points[i], points[i + 1]))
                 {
@@ -76,6 +73,10 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+
+        // skip adding a point if we haven't moved far enough yet
+        if (Vector2.Distance(pos, points[points.Count - 1]) < minPointDistance)
+            return;
 
         // no intersection, add the new point and extend the line
         points.Add(pos);

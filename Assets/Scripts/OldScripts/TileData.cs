@@ -6,4 +6,5 @@ public class TileData : ScriptableObject
 {
     [Range(0f, 1f)] public float speedMultiplier = 1f;
     public Tile tile;
+    public TileData transformsInto;
 }
