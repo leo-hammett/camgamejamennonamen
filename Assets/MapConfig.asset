@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5115bad2fbdf94dd4b5296f0139c30f3, type: 3}
+  m_Name: MapConfig
+  m_EditorClassIdentifier: Assembly-CSharp::InGraved.Config.GameConfig
+  mapConfig: {fileID: 0}
+  generatorConfig: {fileID: 0}
+  playerConfig: {fileID: 0}
+  difficultyGracePeriod: 30
+  spawnRateIncreasePerMinute: 0.1
+  maxSpawnRateMultiplier: 3
+  pointsPerGeneratorKill: 100
+  pointsPerSecond: 1
+  scoreMultiplierCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  gameOverDelay: 1
+  musicVolume: 0.5
+  sfxVolume: 0.7
+  powerupSpawnRate: 0
+  powerupDuration: 0
