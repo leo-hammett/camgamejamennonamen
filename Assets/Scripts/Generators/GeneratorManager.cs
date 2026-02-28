@@ -1,4 +1,4 @@
-#if false
+// Removed #if false to enable compilation
 using UnityEngine;
 using System.Collections.Generic;
 using InGraved.Core;
@@ -7,14 +7,30 @@ using InGraved.Config;
 namespace InGraved.Generators
 {
     /// <summary>
-    /// Concrete implementation of generator manager
+    /// HYBRID MANAGER: Works with both StoneGrowerControl (current) and StoneGenerator (future)
+    /// 
+    /// Current Setup (for testing):
+    /// - Create StoneGrowerControl prefab with sprites/tilemap refs
+    /// - Assign prefab to generatorPrefabOld field
+    /// - Manager will spawn them at configured rate
+    /// 
+    /// Future Migration:
+    /// - Switch to StoneGenerator prefab instead
+    /// - Uncomment the new architecture code
+    /// - Remove StoneGrowerControl references
     /// </summary>
     public class GeneratorManager : MonoBehaviour, IGeneratorManager
     {
         [Header("Configuration")]
         public GeneratorConfig config;
         
-        private List<IStoneGenerator> activeGenerators = new List<IStoneGenerator>();
+        [Header("Temporary - Using Old Scripts")]
+        public GameObject generatorPrefabOld; // StoneGrowerControl prefab
+        public Tilemap stoneTilemap; // For StoneGrowerControl
+        public TileBase stoneTile; // For StoneGrowerControl
+        
+        private List<GameObject> activeGeneratorsOld = new List<GameObject>(); // For StoneGrowerControl
+        private List<IStoneGenerator> activeGenerators = new List<IStoneGenerator>(); // For future
         private float spawnTimer = 0f;
         private float spawnRateMultiplier = 1f;
         private int totalKilled = 0;
@@ -49,11 +65,14 @@ namespace InGraved.Generators
             
             // Update spawn timer
             spawnTimer -= deltaTime;
-            if (spawnTimer <= 0f && activeGenerators.Count < config.maxAliveGenerators)
+            if (spawnTimer <= 0f && activeGeneratorsOld.Count < config.maxAliveGenerators)
             {
-                SpawnRandomGenerator();
+                SpawnRandomGeneratorOld(); // Using old system for now
                 spawnTimer = 1f / (config.baseSpawnRate * spawnRateMultiplier);
             }
+            
+            // Clean up destroyed generators
+            activeGeneratorsOld.RemoveAll(g => g == null);
             
             // Update all generators
             foreach (var generator in activeGenerators)
@@ -109,15 +128,60 @@ namespace InGraved.Generators
         }
         
         /// <summary>
-        /// Spawn a generator at random position
+        /// Spawn generator using OLD StoneGrowerControl (temporary)
+        /// </summary>
+        private void SpawnRandomGeneratorOld()
+        {
+            if (generatorPrefabOld == null) 
+            {
+                Debug.LogWarning("No old generator prefab assigned! Set generatorPrefabOld in GeneratorManager.");
+                return;
+            }
+            
+            Vector2 spawnPos = GetRandomEdgePosition();
+            GameObject newGen = Instantiate(generatorPrefabOld, spawnPos, Quaternion.identity);
+            
+            // Set up StoneGrowerControl references if needed
+            var grower = newGen.GetComponent<StoneGrowerControl>();
+            if (grower != null)
+            {
+                // Find PlayerMovement in scene
+                var player = FindFirstObjectByType<PlayerMovement>();
+                if (player != null)
+                {
+                    // Set via serialized field (needs to be public in StoneGrowerControl)
+                    var field = typeof(StoneGrowerControl).GetField("movement", 
+                        System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                    field?.SetValue(grower, player);
+                }
+                
+                // Set tilemap references
+                if (stoneTilemap != null)
+                {
+                    var tilemapField = typeof(StoneGrowerControl).GetField("stoneTilemap",
+                        System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                    tilemapField?.SetValue(grower, stoneTilemap);
+                    
+                    var tileField = typeof(StoneGrowerControl).GetField("stoneTile",
+                        System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                    tileField?.SetValue(grower, stoneTile);
+                }
+            }
+            
+            activeGeneratorsOld.Add(newGen);
+        }
+        
+        /// <summary>
+        /// Spawn a generator at random position (FUTURE)
         /// </summary>
         public IStoneGenerator SpawnRandomGenerator()
         {
             if (config == null) return null;
             
-            // TODO: Get player position for spawn distance
-            Vector2 randomPos = Random.insideUnitCircle * config.maxSpawnDistance;
-            return SpawnGenerator(randomPos);
+            // TODO: Migrate to new architecture when ready
+            // Vector2 randomPos = Random.insideUnitCircle * config.maxSpawnDistance;
+            // return SpawnGenerator(randomPos);
+            return null;
         }
         
         /// <summary>
@@ -237,4 +301,4 @@ namespace InGraved.Generators
         }
     }
 }
-#endif
+// Removed #endif

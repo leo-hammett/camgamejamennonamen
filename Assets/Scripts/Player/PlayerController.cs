@@ -6,7 +6,19 @@ using InGraved.Trail;
 namespace InGraved.Player
 {
     /// <summary>
-    /// Concrete implementation of player controller
+    /// MIGRATION NOTE: Currently using PlayerMovement.cs for working gameplay
+    /// 
+    /// When ready to adopt this architecture:
+    /// 1. Move movement logic from PlayerMovement.Update() here
+    /// 2. Use PlayerConfig for speed/trail settings instead of hardcoded values  
+    /// 3. Integrate with GameManager for proper system orchestration
+    /// 4. Move trail rendering from PlayerMovement to TrailSystem
+    /// 
+    /// Benefits of migrating:
+    /// - Configurable via ScriptableObjects (no hardcoding)
+    /// - Better separation of concerns (movement vs trail vs collision)
+    /// - Integrates with save/load system
+    /// - Easier to test and extend
     /// </summary>
     public class PlayerController : MonoBehaviour, IPlayerController
     {
@@ -20,6 +32,7 @@ namespace InGraved.Player
         public bool IsAlive { get; private set; }
         public bool IsReady { get; private set; }
         
+        /* COMMENTED OUT - Using PlayerMovement.cs for now
         /// <summary>
         /// Initialize the system
         /// </summary>
@@ -44,8 +57,17 @@ namespace InGraved.Player
         /// </summary>
         public void UpdateSystem(float deltaTime)
         {
-            // TODO: Update player system
+            // TODO: Port from PlayerMovement.Update():
+            // - Mouse position tracking
+            // - Movement toward mouse
+            // - Collision detection with gravestones
         }
+        */
+        
+        // Stub implementations to satisfy interface
+        public void Initialize() { }
+        public void Initialize(PlayerConfig config) { }
+        public void UpdateSystem(float deltaTime) { }
         
         /// <summary>
         /// Shutdown system

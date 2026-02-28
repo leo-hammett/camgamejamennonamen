@@ -8,7 +8,8 @@ public class StoneGrowerControl : MonoBehaviour
     [SerializeField] private float speed = 3f;
     [SerializeField] private Tilemap stoneTilemap;
     [SerializeField] private TileBase stoneTile;
-    [SerializeField] private int stoneRadius = 1;
+    [SerializeField] private float stoneRadius = 1f;
+    [SerializeField] private float radiusGrowthRate = 0.1f;
 
     void Start()
     {
@@ -25,6 +26,7 @@ public class StoneGrowerControl : MonoBehaviour
         Vector3 direction = (movement.transform.position - transform.position).normalized;
         transform.position += direction * speed * Time.deltaTime;
         PaintStone();
+        stoneRadius += radiusGrowthRate * Time.deltaTime;
     }
 
     void PaintStone()
@@ -33,9 +35,10 @@ public class StoneGrowerControl : MonoBehaviour
         Vector3Int center = stoneTilemap.WorldToCell(transform.position);
 
         // paint all cells within stoneRadius
-        for (int x = -stoneRadius; x <= stoneRadius; x++)
+        int intRadius = Mathf.CeilToInt(stoneRadius);
+        for (int x = -intRadius; x <= intRadius; x++)
         {
-            for (int y = -stoneRadius; y <= stoneRadius; y++)
+            for (int y = -intRadius; y <= intRadius; y++)
             {
                 if (x * x + y * y <= stoneRadius * stoneRadius)
                     stoneTilemap.SetTile(center + new Vector3Int(x, y, 0), stoneTile);

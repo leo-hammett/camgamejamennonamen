@@ -6,7 +6,19 @@ using InGraved.Config;
 namespace InGraved.Trail
 {
     /// <summary>
-    /// Concrete implementation of the trail system
+    /// MIGRATION NOTE: Currently using PlayerMovement.cs for trail rendering
+    /// 
+    /// When ready to adopt this architecture:
+    /// 1. Move trail points tracking from PlayerMovement here
+    /// 2. Move LineRenderer setup from PlayerMovement.Start() here
+    /// 3. Move intersection detection from PlayerMovement.SegmentsIntersect() here
+    /// 4. Separate trail visuals from movement logic
+    /// 
+    /// Benefits of migrating:
+    /// - Dedicated trail management (can have multiple trails)
+    /// - Better encirclement detection with EncirclementDetector
+    /// - Trail effects and powerups easier to implement
+    /// - Can persist trail between scenes
     /// </summary>
     public class TrailSystem : MonoBehaviour, ITrailSystem
     {
@@ -20,6 +32,7 @@ namespace InGraved.Trail
         public int TrailLength => trailPoints.Count;
         public bool IsReady { get; private set; }
         
+        /* COMMENTED OUT - Using PlayerMovement.cs for trail
         /// <summary>
         /// Initialize system
         /// </summary>
@@ -27,6 +40,9 @@ namespace InGraved.Trail
         {
             IsReady = true;
             trailPoints = new List<Vector2>();
+            // TODO: Port from PlayerMovement.Start():
+            // - LineRenderer setup
+            // - Material assignment
         }
         
         /// <summary>
@@ -35,7 +51,15 @@ namespace InGraved.Trail
         public void UpdateSystem(float deltaTime)
         {
             UpdateTrail(deltaTime);
+            // TODO: Port from PlayerMovement.Update():
+            // - Check for self-intersection
+            // - Trigger OnLoopClosed event
         }
+        */
+        
+        // Stub implementations to satisfy interface
+        public void Initialize() { IsReady = true; }
+        public void UpdateSystem(float deltaTime) { }
         
         /// <summary>
         /// Shutdown system

@@ -125,6 +125,43 @@ namespace InGraved.Core
             }
         }
         
+        void Start()
+        {
+            // Auto-start the game for testing
+            StartGame();
+            
+            // TODO: Future - Add menu system
+        }
+        
+        void Update()
+        {
+            if (currentState != GameState.Playing) return;
+            
+            timeSurvived += Time.deltaTime;
+            
+            if (useOldScripts)
+            {
+                // Check game over with old scripts
+                if (playerMovement != null && !playerMovement.enabled)
+                {
+                    EndGame();
+                }
+                
+                // Update generator spawning
+                if (generatorManager != null)
+                {
+                    generatorManager.UpdateSystem(Time.deltaTime);
+                }
+            }
+            else
+            {
+                // TODO: Future - Update all systems
+                // mapSystem?.UpdateSystem(Time.deltaTime);
+                // generatorManager?.UpdateSystem(Time.deltaTime);
+                // playerController?.UpdateSystem(Time.deltaTime);
+            }
+        }
+        
         /// <summary>
         /// HOOK: Future powerup collection
         /// </summary>

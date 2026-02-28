@@ -109,7 +109,7 @@ public class SetupHelper : MonoBehaviour
         }
         
         // Setup Canvas for Telemetry
-        Canvas canvas = FindObjectOfType<Canvas>();
+        Canvas canvas = FindFirstObjectByType<Canvas>();
         if (canvas == null)
         {
             GameObject canvasObj = new GameObject("Canvas");
