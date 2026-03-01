@@ -167,8 +167,8 @@ PlayerSettings:
   androidMaxAspectRatio: 2.4
   androidMinAspectRatio: 1
   applicationIdentifier:
-    iOS: com.leohammett.ingraved
     Standalone: com.leohammett.ingraved
+    iOS: com.leohammett.ingraved
   buildNumber:
     Standalone: 0
     VisionOS: 0

@@ -44,7 +44,11 @@ public class StoneGrowerCreation : MonoBehaviour
             return;
         }
 
-        if (Time.time >= lastSpawnTime + spawnInterval)
+        // Adjust spawn rate based on stone intensity
+        float spawnBoost = 2f - PlayerMovement.stoneIntensity;
+        float adjustedInterval = spawnInterval / spawnBoost;
+        
+        if (Time.time >= lastSpawnTime + adjustedInterval)
         {
             float spawnRadius = minRadius + Random.value * radialRange;
             float spawnAngle = Random.value * math.TAU;

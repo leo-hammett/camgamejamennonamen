@@ -12,8 +12,8 @@ public class StoneGrowerControl : MonoBehaviour
     private List<TileData> tileDataList;
     private Dictionary<TileBase, TileData> tileDataMap;
     private Dictionary<Vector3Int, float> tileLastUpdated = new Dictionary<Vector3Int, float>();
-    [SerializeField] private int stoneRadius = 1;
-    private float tileUpdateInterval = 3f;
+    [SerializeField] private int baseStoneRadius = 1;
+    private float baseTileUpdateInterval = 3f;
     private MenuUIController menu;
 
     [Header("Sprites")]
@@ -59,7 +59,9 @@ public class StoneGrowerControl : MonoBehaviour
     void Update()
     {
         Vector3 direction = (movement.transform.position - transform.position).normalized;
-        transform.position += direction * speed * Time.deltaTime;
+        // Speed up when player is on stone (inverse relationship)
+        float speedBoost = 2f - PlayerMovement.stoneIntensity;
+        transform.position += direction * speed * speedBoost * Time.deltaTime;
         PaintStone();
         UpdateAnimation();
     }
@@ -82,6 +84,11 @@ public class StoneGrowerControl : MonoBehaviour
     {
         // get the tilemap cell the grower is currently on
         Vector3Int center = tilemap.WorldToCell(transform.position);
+        
+        // Increase radius and speed when player is on stone
+        float stoneBoost = 2f - PlayerMovement.stoneIntensity;
+        int stoneRadius = Mathf.CeilToInt(baseStoneRadius * stoneBoost);
+        float tileUpdateInterval = baseTileUpdateInterval / stoneBoost;
 
         // paint all cells within stoneRadius
         for (int x = -stoneRadius; x <= stoneRadius; x++)
