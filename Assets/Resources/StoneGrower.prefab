@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.03, y: 0.89, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,6 +107,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoneGrowerControl
   speed: 3
   stoneRadius: 1
+  frame1Sprite: {fileID: 4311839913804667879, guid: 20298303ad18a4130b963eecda642f15, type: 3}
+  frame2Sprite: {fileID: 5947567257778668535, guid: ef99dbc06eb2b4b9b909fc00faa13568, type: 3}
+  animationSpeed: 0.15
 --- !u!58 &-4210298129176907827
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -142,4 +145,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.25
