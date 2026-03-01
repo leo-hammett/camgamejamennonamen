@@ -12,6 +12,7 @@ public class MenuUIController : MonoBehaviour
     [SerializeField] private Button playButton;
     [SerializeField] private Button retryButton;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private Image logo;
     public bool playing = false;
     public float startTime;
     public event System.Action StartGame;
@@ -29,6 +30,7 @@ public class MenuUIController : MonoBehaviour
 
     void OnPlayClicked()
     {
+        logo.gameObject.SetActive(false);
         playButton.gameObject.SetActive(false);
         startTime = Time.time;
         playing = true;

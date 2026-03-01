@@ -107,8 +107,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoneGrowerControl
   speed: 3
   stoneRadius: 1
-  frame1Sprite: {fileID: 4311839913804667879, guid: 20298303ad18a4130b963eecda642f15, type: 3}
-  frame2Sprite: {fileID: 5947567257778668535, guid: ef99dbc06eb2b4b9b909fc00faa13568, type: 3}
+  frame1Sprite: {fileID: 4311839913804667879, guid: df69b96198e5142ec8d5bf8547c899dd, type: 3}
+  frame2Sprite: {fileID: 5947567257778668535, guid: 3cbb9a16dca344b7384e92adddbc9069, type: 3}
   animationSpeed: 0.15
 --- !u!58 &-4210298129176907827
 CircleCollider2D:
