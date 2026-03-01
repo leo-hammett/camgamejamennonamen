@@ -21,6 +21,12 @@ public class MenuUIController : MonoBehaviour
     void Awake()
     {
         menuCanvas = GameObject.Find("MenuCanvas");
+        
+        // Ensure UI scales properly
+        if (menuCanvas != null && menuCanvas.GetComponent<SimpleUIScaler>() == null)
+        {
+            menuCanvas.AddComponent<SimpleUIScaler>();
+        }
     }
 
     void Start()
