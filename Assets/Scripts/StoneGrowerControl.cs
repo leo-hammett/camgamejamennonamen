@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using UnityEditor;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class StoneGrowerControl : MonoBehaviour
 {
     private PlayerMovement movement;
@@ -15,12 +16,24 @@ public class StoneGrowerControl : MonoBehaviour
     private float tileUpdateInterval = 3f;
     private MenuUIController menu;
 
+    [Header("Sprites")]
+    public Sprite frame1Sprite;
+    public Sprite frame2Sprite;
+
+    [Header("Animation")]
+    public float animationSpeed = 0.15f;
+
+    private SpriteRenderer spriteRenderer;
+    private float animationTimer = 0f;
+    private bool useFrame2 = false;
+
     void Awake()
     {
         tileDataList = Resources.Load<TileDictionary>("TileDictionary").tileDataList;
         movement = FindFirstObjectByType<PlayerMovement>();
         tilemap = FindFirstObjectByType<Tilemap>();
         menu = FindFirstObjectByType<MenuUIController>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Start()
@@ -48,6 +61,21 @@ public class StoneGrowerControl : MonoBehaviour
         Vector3 direction = (movement.transform.position - transform.position).normalized;
         transform.position += direction * speed * Time.deltaTime;
         PaintStone();
+        UpdateAnimation();
+    }
+
+    void UpdateAnimation()
+    {
+        animationTimer += Time.deltaTime;
+        if (animationTimer >= animationSpeed)
+        {
+            animationTimer = 0f;
+            useFrame2 = !useFrame2;
+        }
+
+        Sprite target = useFrame2 ? frame2Sprite : frame1Sprite;
+        if (target != null)
+            spriteRenderer.sprite = target;
     }
 
     void PaintStone()
