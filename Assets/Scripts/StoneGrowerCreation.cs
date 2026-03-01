@@ -33,7 +33,7 @@ public class StoneGrowerCreation : MonoBehaviour
     void OnGameStart()
     {
         startTime = menu.startTime;
-        lastSpawnTime = startTime;
+        lastSpawnTime = 0;
     }
 
     // Every (spawnInterval) seconds, spawn a StoneGrower

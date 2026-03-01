@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Dirt
+  m_Name: StoneBasic
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.Tilemaps.Tile
-  m_Sprite: {fileID: -8275502208090371910, guid: 06864b3dca9b0456b81ee23276ecffde, type: 3}
+  m_Sprite: {fileID: 1302723820812287101, guid: f609905b199444cf0942075da134c233, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

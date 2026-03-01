@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8d2243c6e6fe4193845c9d1ed7dc8de, type: 3}
-  m_Name: Stone3Data
+  m_Name: StoneBasicData
   m_EditorClassIdentifier: Assembly-CSharp::TileData
-  speedMultiplier: 0.1
-  tile: {fileID: 11400000, guid: caf0a756295c44c309ab6c653052996b, type: 2}
-  transformsInto: {fileID: 0}
+  speedMultiplier: 0.8
+  tile: {fileID: 11400000, guid: cff4431d911be4f109d76563dd5c8ca7, type: 2}
+  transformsInto: {fileID: 11400000, guid: ee4c7d863dc4845b19e3cd839b55e3e2, type: 2}

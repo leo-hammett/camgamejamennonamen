@@ -3,13 +3,15 @@ using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerMovement : MonoBehaviour
 {
     // minimum distance the player must travel before a new point is added to the line,
     // prevents adding hundreds of nearly identical points every frame
     [SerializeField] private float minPointDistance = 0.1f;
-    [SerializeField] private Material lineMaterial;
+    [SerializeField] private Color lineColor = Color.white;
     [SerializeField] private float baseSpeed = 5f;
+    [SerializeField] private float lineWidth = 0.1f;
     public event System.Action<List<Vector2>> OnLoopClosed;
 
     // pair each TileBase with a TileData asset to define its speed multiplier
@@ -23,12 +25,29 @@ public class PlayerMovement : MonoBehaviour
     private GameSettings gameSettings;
     private MenuUIController menu;
 
+    [Header("Sprites")]
+    public Sprite[] frame1Sprites = new Sprite[8];
+    public Sprite[] frame2Sprites = new Sprite[8];
+
+    [Header("Animation")]
+    public float animationSpeed = 0.15f;
+
+    [Header("Effects")]
+    [SerializeField] private ParticleSystem deathParticles;
+    [SerializeField] private int deathParticleCount = 20;
+
+    private SpriteRenderer spriteRenderer;
+    private float animationTimer = 0f;
+    private bool useFrame2 = false;
+    private int currentDirectionIndex = 0;
+
     void Awake()
     {
         tileDataList = Resources.Load<TileDictionary>("TileDictionary").tileDataList;
         gameSettings = Resources.Load<GameSettings>("GameSettings");
         tilemap = FindFirstObjectByType<Tilemap>();
         menu = FindFirstObjectByType<MenuUIController>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Start()
@@ -40,29 +59,50 @@ public class PlayerMovement : MonoBehaviour
         for (int i = 0; i < tileDataList.Count; i++)
             tileDataMap[tileDataList[i].tile] = tileDataList[i];
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.material = lineMaterial;
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = lineColor;
+        lineRenderer.endColor = lineColor;
+        lineRenderer.widthMultiplier = lineWidth;
+        lineRenderer.widthCurve = AnimationCurve.Constant(0, 1, 1);
         menu.StartGame += OnGameStart;
+        menu.Died += OnDeath;
+        ValidateSpriteArrays();
     }
 
     void OnGameStart()
     {
+        if (deathParticles != null)
+        {
+            deathParticles.Clear();
+        }
+        spriteRenderer.enabled = true;
         transform.position = new Vector3(gameSettings.width/4, gameSettings.height/4, 0);
         StartNewLine();
     }
 
+    void OnDeath()
+    {
+        spriteRenderer.enabled = false;
+        if (deathParticles != null)
+        {
+            deathParticles.Emit(deathParticleCount);
+        }
+    }
+
     void Update()
     {
-        if (!menu.playing)
-        {
-            return;
-        }
-
         // convert mouse screen position to world space using the new Input System
         Vector2 mouseScreen = Mouse.current.position.ReadValue();
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = transform.position.z;
+
+        UpdateDirectionIndex(mouseWorld);
+        UpdateAnimation();
+
+        if (!menu.playing)
+        {
+            return;
+        }
 
         // look up the tile at the player's current position and apply its speed multiplier
         TileBase currentTile = tilemap.GetTile(tilemap.WorldToCell(transform.position));
@@ -110,6 +150,49 @@ public class PlayerMovement : MonoBehaviour
         points.Add(transform.position);
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
+    }
+
+    void UpdateDirectionIndex(Vector2 mouseWorldPosition)
+    {
+        Vector2 directionVector = mouseWorldPosition - (Vector2)transform.position;
+        float angleInDegrees = Mathf.Atan2(directionVector.x, directionVector.y) * Mathf.Rad2Deg;
+        if (angleInDegrees < 0f) angleInDegrees += 360f;
+        currentDirectionIndex = Mathf.FloorToInt((angleInDegrees + 22.5f) / 45f) % 8;
+    }
+
+    void UpdateAnimation()
+    {
+        Sprite[] currentFrameArray;
+
+        if (menu.playing)
+        {
+            animationTimer += Time.deltaTime;
+            if (animationTimer >= animationSpeed)
+            {
+                animationTimer = 0f;
+                useFrame2 = !useFrame2;
+            }
+            currentFrameArray = useFrame2 ? frame2Sprites : frame1Sprites;
+        }
+        else
+        {
+            currentFrameArray = frame1Sprites;
+        }
+
+        if (currentFrameArray != null && currentDirectionIndex < currentFrameArray.Length)
+        {
+            Sprite targetSprite = currentFrameArray[currentDirectionIndex];
+            if (targetSprite != null)
+                spriteRenderer.sprite = targetSprite;
+        }
+    }
+
+    void ValidateSpriteArrays()
+    {
+        if (frame1Sprites == null || frame1Sprites.Length != 8)
+            Debug.LogWarning("PlayerMovement: frame1Sprites should contain exactly 8 sprites.");
+        if (frame2Sprites == null || frame2Sprites.Length != 8)
+            Debug.LogWarning("PlayerMovement: frame2Sprites should contain exactly 8 sprites.");
     }
 
     // standard 2D line segment intersection test using cross products

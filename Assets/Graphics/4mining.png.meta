@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5d5c2ac44ab6b4d73ac4cdff676e276f
+guid: c73bc855ad5f84e279ea604b05d16a5a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3265532595121663265
-    second: TempRetryButton_0
+      213: -7521854793343078245
+    second: 4mining_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TempRetryButton_0
+      name: 4mining_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 23
         y: 0
-        width: 128
-        height: 64
+        width: 78
+        height: 125
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 12dafaef790815d20800000000000000
-      internalID: 3265532595121663265
+      spriteID: b9077befae00d9790800000000000000
+      internalID: -7521854793343078245
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TempRetryButton_0: 3265532595121663265
+      4mining_0: -7521854793343078245
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

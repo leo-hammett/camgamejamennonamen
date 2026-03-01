@@ -29,10 +29,17 @@ public class StoneGrowerControl : MonoBehaviour
         for (int i = 0; i < tileDataList.Count; i++)
             tileDataMap[tileDataList[i].tile] = tileDataList[i];
         movement.OnLoopClosed += HandleLoopClosed;
+        menu.Died += OnDeath;
+    }
+
+    void OnDeath()
+    {
+        Destroy(gameObject);
     }
 
     void OnDestroy()
     {
+        menu.Died -= OnDeath;
         movement.OnLoopClosed -= HandleLoopClosed;
     }
 
@@ -60,7 +67,7 @@ public class StoneGrowerControl : MonoBehaviour
                         continue;
 
                     TileBase currentTile = tilemap.GetTile(tilePos);
-                    TileBase newTile = (currentTile != null && tileDataMap.TryGetValue(currentTile, out TileData data)) ? data.transformsInto.tile : currentTile;
+                    TileBase newTile = (currentTile != null && tileDataMap.TryGetValue(currentTile, out TileData data) && data.transformsInto != null) ? data.transformsInto.tile : currentTile;
                     tilemap.SetTile(tilePos, newTile);
                     tileLastUpdated[tilePos] = Time.time;
                 }
@@ -70,7 +77,7 @@ public class StoneGrowerControl : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<PlayerMovement>() != null)
+        if (other.GetComponent<PlayerMovement>() != null && menu.playing)
         {
             menu.EndGame();
             Destroy(gameObject);

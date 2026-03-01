@@ -1,6 +1,9 @@
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
+using TMPro;
 
 public class MenuUIController : MonoBehaviour
 {
@@ -8,9 +11,11 @@ public class MenuUIController : MonoBehaviour
     private GameObject menuCanvas;
     [SerializeField] private Button playButton;
     [SerializeField] private Button retryButton;
+    [SerializeField] private TextMeshProUGUI scoreText;
     public bool playing = false;
     public float startTime;
     public event System.Action StartGame;
+    public event System.Action Died;
 
     void Awake()
     {
@@ -33,6 +38,7 @@ public class MenuUIController : MonoBehaviour
     void OnRetryClicked()
     {
         retryButton.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
         startTime = Time.time;
         playing = true;
         StartGame?.Invoke();
@@ -41,7 +47,11 @@ public class MenuUIController : MonoBehaviour
     public void EndGame()
     {
         playing = false;
+        Died?.Invoke();
         retryButton.gameObject.SetActive(true);
+        int score = (int) math.round(Time.time - startTime)*100;
+        scoreText.text = "Score: " + score;
+        scoreText.gameObject.SetActive(true);
         retryButton.onClick.AddListener(OnRetryClicked);
     }
 }

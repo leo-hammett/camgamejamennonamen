@@ -8,14 +8,22 @@ public class GenerateMap : MonoBehaviour
     [SerializeField] private TileBase borderTile;
     [SerializeField] private int borderSize = 20;
     private GameSettings gameSettings;
+    private MenuUIController menu;
 
     void Awake()
     {
         gameSettings = Resources.Load<GameSettings>("GameSettings");
         tilemap = FindFirstObjectByType<Tilemap>();
+        menu = FindFirstObjectByType<MenuUIController>();
     }
 
     void Start()
+    {
+        Generate();
+        menu.StartGame += OnGameStart;
+    }
+
+    void OnGameStart()
     {
         Generate();
     }

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8d2243c6e6fe4193845c9d1ed7dc8de, type: 3}
+  m_Name: StoneEtherealData
+  m_EditorClassIdentifier: Assembly-CSharp::TileData
+  speedMultiplier: 0.1
+  tile: {fileID: 11400000, guid: caf0a756295c44c309ab6c653052996b, type: 2}
+  transformsInto: {fileID: 0}

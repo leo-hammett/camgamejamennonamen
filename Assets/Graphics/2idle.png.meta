@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 55b46a21575284026b28bc6f908c9b69
+guid: 822db0fc0bb144a8a8e0e6c82cae7c11
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5579811498923206014
-    second: TempPlayButton_0
+      213: 1782698712785048222
+    second: 2idle_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TempPlayButton_0
+      name: 2idle_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 128
-        height: 64
+        x: 26
+        y: 1
+        width: 90
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 28ada0d31078092b0800000000000000
-      internalID: -5579811498923206014
+      spriteID: e92591db80b6db810800000000000000
+      internalID: 1782698712785048222
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TempPlayButton_0: -5579811498923206014
+      2idle_0: 1782698712785048222
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
