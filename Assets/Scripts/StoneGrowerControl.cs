@@ -39,6 +39,7 @@ public class StoneGrowerControl : MonoBehaviour
 
     void OnDestroy()
     {
+        menu.Died -= OnDeath;
         movement.OnLoopClosed -= HandleLoopClosed;
     }
 

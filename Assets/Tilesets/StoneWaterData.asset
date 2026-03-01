@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8d2243c6e6fe4193845c9d1ed7dc8de, type: 3}
   m_Name: StoneWaterData
   m_EditorClassIdentifier: Assembly-CSharp::TileData
-  speedMultiplier: 0.6
+  speedMultiplier: 0.5
   tile: {fileID: 11400000, guid: 022c7c0cfa42943378101eccf8eff838, type: 2}
   transformsInto: {fileID: 11400000, guid: 493b2817460d14464b55950a95a13743, type: 2}

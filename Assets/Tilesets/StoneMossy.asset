@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: StoneMossy
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.Tilemaps.Tile
-  m_Sprite: {fileID: -7560284153744367771, guid: e82a4812ab93f4819b40cf2542fc0e97, type: 3}
+  m_Sprite: {fileID: 8447862615988741121, guid: 08a0fc30408044978989b3357c02c04a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
