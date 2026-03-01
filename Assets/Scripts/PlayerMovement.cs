@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private List<TileData> tileDataList;
     private Tilemap tilemap;
     private Dictionary<TileBase, TileData> tileDataMap;
+    public static float stoneIntensity = 1f; // 1 = normal, 0 = full stone
+    private ScreenEffectsManager screenEffects;
 
     private LineRenderer lineRenderer;
     // stores the world positions of the current line so we can check for self-intersection
@@ -48,6 +50,19 @@ public class PlayerMovement : MonoBehaviour
         tilemap = FindFirstObjectByType<Tilemap>();
         menu = FindFirstObjectByType<MenuUIController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        screenEffects = FindFirstObjectByType<ScreenEffectsManager>();
+        if (screenEffects == null)
+        {
+            GameObject effectsGO = new GameObject("ScreenEffectsManager");
+            screenEffects = effectsGO.AddComponent<ScreenEffectsManager>();
+        }
+        
+        // Ensure indicator manager exists
+        if (FindFirstObjectByType<EnemyIndicatorManager>() == null)
+        {
+            GameObject indicatorGO = new GameObject("EnemyIndicatorManager");
+            indicatorGO.AddComponent<EnemyIndicatorManager>();
+        }
     }
 
     void Start()
@@ -77,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
         }
         spriteRenderer.enabled = true;
         transform.position = new Vector3(gameSettings.width/4, gameSettings.height/4, 0);
+        stoneIntensity = 1f; // Reset stone intensity
         StartNewLine();
     }
 
@@ -104,9 +120,13 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        // look up the tile at the player's current position and apply its speed multiplier
+        // look up the tile at the player's current position
         TileBase currentTile = tilemap.GetTile(tilemap.WorldToCell(transform.position));
         float speedMultiplier = (currentTile != null && tileDataMap.TryGetValue(currentTile, out TileData data)) ? data.speedMultiplier : 1f;
+        
+        // Update stone intensity (inverse of speed multiplier)
+        stoneIntensity = speedMultiplier;
+        screenEffects.SetStoneIntensity(stoneIntensity);
 
         if (speedMultiplier == 0)
         {
@@ -114,7 +134,8 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        transform.position += (mouseWorld - transform.position).normalized * baseSpeed * speedMultiplier * Time.deltaTime;
+        // Always move at full speed regardless of tile
+        transform.position += (mouseWorld - transform.position).normalized * baseSpeed * Time.deltaTime;
 
         Vector2 pos = transform.position;
 

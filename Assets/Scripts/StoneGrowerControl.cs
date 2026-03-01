@@ -59,7 +59,9 @@ public class StoneGrowerControl : MonoBehaviour
     void Update()
     {
         Vector3 direction = (movement.transform.position - transform.position).normalized;
-        transform.position += direction * speed * Time.deltaTime;
+        // Speed up when player is on stone (inverse relationship)
+        float speedBoost = 2f - PlayerMovement.stoneIntensity;
+        transform.position += direction * speed * speedBoost * Time.deltaTime;
         PaintStone();
         UpdateAnimation();
     }
