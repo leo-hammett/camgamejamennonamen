@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerMovement : MonoBehaviour
 {
     // minimum distance the player must travel before a new point is added to the line,
@@ -23,12 +24,25 @@ public class PlayerMovement : MonoBehaviour
     private GameSettings gameSettings;
     private MenuUIController menu;
 
+    [Header("Sprites")]
+    public Sprite[] frame1Sprites = new Sprite[8];
+    public Sprite[] frame2Sprites = new Sprite[8];
+
+    [Header("Animation")]
+    public float animationSpeed = 0.15f;
+
+    private SpriteRenderer spriteRenderer;
+    private float animationTimer = 0f;
+    private bool useFrame2 = false;
+    private int currentDirectionIndex = 0;
+
     void Awake()
     {
         tileDataList = Resources.Load<TileDictionary>("TileDictionary").tileDataList;
         gameSettings = Resources.Load<GameSettings>("GameSettings");
         tilemap = FindFirstObjectByType<Tilemap>();
         menu = FindFirstObjectByType<MenuUIController>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Start()
@@ -44,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
         lineRenderer.startWidth = 0.1f;
         lineRenderer.endWidth = 0.1f;
         menu.StartGame += OnGameStart;
+        ValidateSpriteArrays();
     }
 
     void OnGameStart()
@@ -54,15 +69,18 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (!menu.playing)
-        {
-            return;
-        }
-
         // convert mouse screen position to world space using the new Input System
         Vector2 mouseScreen = Mouse.current.position.ReadValue();
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = transform.position.z;
+
+        UpdateDirectionIndex(mouseWorld);
+        UpdateAnimation();
+
+        if (!menu.playing)
+        {
+            return;
+        }
 
         // look up the tile at the player's current position and apply its speed multiplier
         TileBase currentTile = tilemap.GetTile(tilemap.WorldToCell(transform.position));
@@ -110,6 +128,40 @@ public class PlayerMovement : MonoBehaviour
         points.Add(transform.position);
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
+    }
+
+    void UpdateDirectionIndex(Vector2 mouseWorldPosition)
+    {
+        Vector2 directionVector = mouseWorldPosition - (Vector2)transform.position;
+        float angleInDegrees = Mathf.Atan2(directionVector.x, directionVector.y) * Mathf.Rad2Deg;
+        if (angleInDegrees < 0f) angleInDegrees += 360f;
+        currentDirectionIndex = Mathf.FloorToInt((angleInDegrees + 22.5f) / 45f) % 8;
+    }
+
+    void UpdateAnimation()
+    {
+        animationTimer += Time.deltaTime;
+        if (animationTimer >= animationSpeed)
+        {
+            animationTimer = 0f;
+            useFrame2 = !useFrame2;
+        }
+
+        Sprite[] currentFrameArray = useFrame2 ? frame2Sprites : frame1Sprites;
+        if (currentFrameArray != null && currentDirectionIndex < currentFrameArray.Length)
+        {
+            Sprite targetSprite = currentFrameArray[currentDirectionIndex];
+            if (targetSprite != null)
+                spriteRenderer.sprite = targetSprite;
+        }
+    }
+
+    void ValidateSpriteArrays()
+    {
+        if (frame1Sprites == null || frame1Sprites.Length != 8)
+            Debug.LogWarning("PlayerMovement: frame1Sprites should contain exactly 8 sprites.");
+        if (frame2Sprites == null || frame2Sprites.Length != 8)
+            Debug.LogWarning("PlayerMovement: frame2Sprites should contain exactly 8 sprites.");
     }
 
     // standard 2D line segment intersection test using cross products
