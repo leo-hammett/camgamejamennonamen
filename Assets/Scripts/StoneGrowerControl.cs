@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
+using UnityEditor;
 
 public class StoneGrowerControl : MonoBehaviour
 {
@@ -12,12 +13,14 @@ public class StoneGrowerControl : MonoBehaviour
     private Dictionary<Vector3Int, float> tileLastUpdated = new Dictionary<Vector3Int, float>();
     [SerializeField] private int stoneRadius = 1;
     private float tileUpdateInterval = 3f;
+    private MenuUIController menu;
 
     void Awake()
     {
         tileDataList = Resources.Load<TileDictionary>("TileDictionary").tileDataList;
         movement = FindFirstObjectByType<PlayerMovement>();
         tilemap = FindFirstObjectByType<Tilemap>();
+        menu = FindFirstObjectByType<MenuUIController>();
     }
 
     void Start()
@@ -62,6 +65,15 @@ public class StoneGrowerControl : MonoBehaviour
                     tileLastUpdated[tilePos] = Time.time;
                 }
             }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.GetComponent<PlayerMovement>() != null)
+        {
+            menu.EndGame();
+            Destroy(gameObject);
         }
     }
 

@@ -23,9 +23,14 @@ public class MenuUIController : MonoBehaviour
 
     void OnPlayClicked()
     {
-        menuCanvas.SetActive(false);
+        playButton.gameObject.SetActive(false);
         startTime = Time.time;
         playing = true;
         StartGame?.Invoke();
+    }
+
+    public void EndGame()
+    {
+        playing = false;
     }
 }
