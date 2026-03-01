@@ -14,23 +14,36 @@ public class StoneGrowerCreation : MonoBehaviour
     private float minRadius = 10f;
     private float radialRange = 10f; // maxRadius - minRadius
     private GameObject player;
+    private MenuUIController menu;
+
     void Awake()
     {
         stoneGrower = Resources.Load<GameObject>("StoneGrower");
         gameSettings = Resources.Load<GameSettings>("GameSettings");
         player = GameObject.Find("Player");
+        menu = FindFirstObjectByType<MenuUIController>();
     }
 
     // Set start time on start
     void Start()
     {
-        startTime = Time.time;
+        menu.StartGame += OnGameStart;
+    }
+
+    void OnGameStart()
+    {
+        startTime = menu.startTime;
         lastSpawnTime = startTime;
     }
 
     // Every (spawnInterval) seconds, spawn a StoneGrower
     void Update()
     {
+        if (!menu.playing)
+        {
+            return;
+        }
+
         if (Time.time >= lastSpawnTime + spawnInterval)
         {
             float spawnRadius = minRadius + Random.value * radialRange;

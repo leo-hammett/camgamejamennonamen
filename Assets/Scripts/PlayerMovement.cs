@@ -21,16 +21,20 @@ public class PlayerMovement : MonoBehaviour
     // stores the world positions of the current line so we can check for self-intersection
     private List<Vector2> points = new List<Vector2>();
     private GameSettings gameSettings;
+    private MenuUIController menu;
 
     void Awake()
     {
         tileDataList = Resources.Load<TileDictionary>("TileDictionary").tileDataList;
         gameSettings = Resources.Load<GameSettings>("GameSettings");
         tilemap = FindFirstObjectByType<Tilemap>();
+        menu = FindFirstObjectByType<MenuUIController>();
     }
 
     void Start()
     {
+        transform.position = new Vector3(gameSettings.width/4, gameSettings.height/4, 0);
+        
         // build lookup dictionary from the two parallel lists
         tileDataMap = new Dictionary<TileBase, TileData>();
         for (int i = 0; i < tileDataList.Count; i++)
@@ -39,12 +43,22 @@ public class PlayerMovement : MonoBehaviour
         lineRenderer.material = lineMaterial;
         lineRenderer.startWidth = 0.1f;
         lineRenderer.endWidth = 0.1f;
+        menu.StartGame += OnGameStart;
+    }
+
+    void OnGameStart()
+    {
         transform.position = new Vector3(gameSettings.width/4, gameSettings.height/4, 0);
         StartNewLine();
     }
 
     void Update()
     {
+        if (!menu.playing)
+        {
+            return;
+        }
+
         // convert mouse screen position to world space using the new Input System
         Vector2 mouseScreen = Mouse.current.position.ReadValue();
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
@@ -83,6 +97,7 @@ public class PlayerMovement : MonoBehaviour
         lineRenderer.positionCount = points.Count;
         lineRenderer.SetPosition(points.Count - 1, pos);
     }
+
     void StartNewLine()
     {
         points.Clear();
