@@ -63,6 +63,13 @@ public class PlayerMovement : MonoBehaviour
             GameObject indicatorGO = new GameObject("EnemyIndicatorManager");
             indicatorGO.AddComponent<EnemyIndicatorManager>();
         }
+        
+        // Ensure music player exists
+        if (FindFirstObjectByType<SimpleMusicPlayer>() == null && FindFirstObjectByType<BackgroundMusicManager>() == null)
+        {
+            GameObject musicGO = new GameObject("MusicPlayer");
+            musicGO.AddComponent<SimpleMusicPlayer>();
+        }
     }
 
     void Start()
