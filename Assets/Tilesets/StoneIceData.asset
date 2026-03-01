@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8d2243c6e6fe4193845c9d1ed7dc8de, type: 3}
   m_Name: StoneIceData
   m_EditorClassIdentifier: Assembly-CSharp::TileData
-  speedMultiplier: 0.75
-  tile: {fileID: 11400000, guid: cff4431d911be4f109d76563dd5c8ca7, type: 2}
-  transformsInto: {fileID: 11400000, guid: f96de3f641fc24c75acbbdd43f271cb0, type: 2}
+  speedMultiplier: 0.5
+  tile: {fileID: 11400000, guid: 6c1dffc3425f647bd9fbb977dc90c14d, type: 2}
+  transformsInto: {fileID: 11400000, guid: 8c4401d3202e84c77bf8028875793434, type: 2}

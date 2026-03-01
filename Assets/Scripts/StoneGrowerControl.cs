@@ -66,7 +66,7 @@ public class StoneGrowerControl : MonoBehaviour
                         continue;
 
                     TileBase currentTile = tilemap.GetTile(tilePos);
-                    TileBase newTile = (currentTile != null && tileDataMap.TryGetValue(currentTile, out TileData data)) ? data.transformsInto.tile : currentTile;
+                    TileBase newTile = (currentTile != null && tileDataMap.TryGetValue(currentTile, out TileData data) && data.transformsInto != null) ? data.transformsInto.tile : currentTile;
                     tilemap.SetTile(tilePos, newTile);
                     tileLastUpdated[tilePos] = Time.time;
                 }
