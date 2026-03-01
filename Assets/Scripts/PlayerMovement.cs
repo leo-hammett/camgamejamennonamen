@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         transform.position = new Vector3(gameSettings.width/4, gameSettings.height/4, 0);
-        
+
         // build lookup dictionary from the two parallel lists
         tileDataMap = new Dictionary<TileBase, TileData>();
         for (int i = 0; i < tileDataList.Count; i++)
@@ -67,6 +67,12 @@ public class PlayerMovement : MonoBehaviour
         // look up the tile at the player's current position and apply its speed multiplier
         TileBase currentTile = tilemap.GetTile(tilemap.WorldToCell(transform.position));
         float speedMultiplier = (currentTile != null && tileDataMap.TryGetValue(currentTile, out TileData data)) ? data.speedMultiplier : 1f;
+
+        if (speedMultiplier == 0)
+        {
+            menu.EndGame();
+            return;
+        }
 
         transform.position += (mouseWorld - transform.position).normalized * baseSpeed * speedMultiplier * Time.deltaTime;
 
