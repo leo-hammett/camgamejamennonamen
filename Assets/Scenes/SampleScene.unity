@@ -509,79 +509,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1001 &1275510725
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 326197540769979985, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 10.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 326197540769979985, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.33
-      objectReference: {fileID: 0}
-    - target: {fileID: 326197540769979985, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 326197540769979985, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 326197540769979985, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 326197540769979985, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 326197540769979985, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 326197540769979985, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 326197540769979985, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 326197540769979985, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3131678353615815799, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: m_Name
-      value: StoneGrower
-      objectReference: {fileID: 0}
-    - target: {fileID: 7234053743290354634, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: m_SortingOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487605665000391004, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: stoneRadius
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487605665000391004, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: stoneTilemap
-      value: 
-      objectReference: {fileID: 648885993}
-    - target: {fileID: 8487605665000391004, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
-      propertyPath: tileUpdateInterval
-      value: 3
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3785cb9281fef4603abc1213fb72b548, type: 3}
 --- !u!1 &1477771829
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,6 +570,51 @@ MonoBehaviour:
   interiorTile: {fileID: 11400000, guid: 6bd0ddce225d4455396bb6d1ae39e6f5, type: 2}
   borderTile: {fileID: 11400000, guid: 57b2784229fdf4463b917a5e58556f12, type: 2}
   borderSize: 20
+--- !u!1 &1805526105
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1805526106}
+  - component: {fileID: 1805526107}
+  m_Layer: 0
+  m_Name: GrowerCreator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1805526106
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805526105}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.17385, y: 2.36513, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1805526107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805526105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cdc583415a674a2db62baa87f7e1b82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StoneGrowerCreation
+  spawnInterval: 5
 --- !u!1 &2015215023
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,4 +730,4 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 2015215025}
   - {fileID: 1477771831}
-  - {fileID: 1275510725}
+  - {fileID: 1805526106}

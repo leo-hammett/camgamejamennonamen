@@ -105,5 +105,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoneGrowerControl
   speed: 3
-  stoneTile: {fileID: 11400000, guid: cff4431d911be4f109d76563dd5c8ca7, type: 2}
   stoneRadius: 1
+  tileUpdateInterval: 1

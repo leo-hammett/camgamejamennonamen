@@ -11,7 +11,7 @@ public class StoneGrowerControl : MonoBehaviour
     private Dictionary<TileBase, TileData> tileDataMap;
     private Dictionary<Vector3Int, float> tileLastUpdated = new Dictionary<Vector3Int, float>();
     [SerializeField] private int stoneRadius = 1;
-    [SerializeField] private float tileUpdateInterval = 1f;
+    private float tileUpdateInterval = 3f;
 
     void Awake()
     {
