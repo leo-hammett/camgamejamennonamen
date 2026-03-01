@@ -9,8 +9,9 @@ public class PlayerMovement : MonoBehaviour
     // minimum distance the player must travel before a new point is added to the line,
     // prevents adding hundreds of nearly identical points every frame
     [SerializeField] private float minPointDistance = 0.1f;
-    [SerializeField] private Material lineMaterial;
+    [SerializeField] private Color lineColor = Color.white;
     [SerializeField] private float baseSpeed = 5f;
+    [SerializeField] private float lineWidth = 0.1f;
     public event System.Action<List<Vector2>> OnLoopClosed;
 
     // pair each TileBase with a TileData asset to define its speed multiplier
@@ -30,6 +31,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Animation")]
     public float animationSpeed = 0.15f;
+
+    [Header("Effects")]
+    [SerializeField] private ParticleSystem deathParticles;
+    [SerializeField] private int deathParticleCount = 20;
 
     private SpriteRenderer spriteRenderer;
     private float animationTimer = 0f;
@@ -54,17 +59,34 @@ public class PlayerMovement : MonoBehaviour
         for (int i = 0; i < tileDataList.Count; i++)
             tileDataMap[tileDataList[i].tile] = tileDataList[i];
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.material = lineMaterial;
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = lineColor;
+        lineRenderer.endColor = lineColor;
+        lineRenderer.widthMultiplier = lineWidth;
+        lineRenderer.widthCurve = AnimationCurve.Constant(0, 1, 1);
         menu.StartGame += OnGameStart;
+        menu.Died += OnDeath;
         ValidateSpriteArrays();
     }
 
     void OnGameStart()
     {
+        if (deathParticles != null)
+        {
+            deathParticles.Clear();
+        }
+        spriteRenderer.enabled = true;
         transform.position = new Vector3(gameSettings.width/4, gameSettings.height/4, 0);
         StartNewLine();
+    }
+
+    void OnDeath()
+    {
+        spriteRenderer.enabled = false;
+        if (deathParticles != null)
+        {
+            deathParticles.Emit(deathParticleCount);
+        }
     }
 
     void Update()
@@ -140,14 +162,23 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateAnimation()
     {
-        animationTimer += Time.deltaTime;
-        if (animationTimer >= animationSpeed)
+        Sprite[] currentFrameArray;
+
+        if (menu.playing)
         {
-            animationTimer = 0f;
-            useFrame2 = !useFrame2;
+            animationTimer += Time.deltaTime;
+            if (animationTimer >= animationSpeed)
+            {
+                animationTimer = 0f;
+                useFrame2 = !useFrame2;
+            }
+            currentFrameArray = useFrame2 ? frame2Sprites : frame1Sprites;
+        }
+        else
+        {
+            currentFrameArray = frame1Sprites;
         }
 
-        Sprite[] currentFrameArray = useFrame2 ? frame2Sprites : frame1Sprites;
         if (currentFrameArray != null && currentDirectionIndex < currentFrameArray.Length)
         {
             Sprite targetSprite = currentFrameArray[currentDirectionIndex];

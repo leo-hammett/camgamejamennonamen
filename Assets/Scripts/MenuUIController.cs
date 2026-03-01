@@ -11,6 +11,7 @@ public class MenuUIController : MonoBehaviour
     public bool playing = false;
     public float startTime;
     public event System.Action StartGame;
+    public event System.Action Died;
 
     void Awake()
     {
@@ -41,6 +42,7 @@ public class MenuUIController : MonoBehaviour
     public void EndGame()
     {
         playing = false;
+        Died?.Invoke();
         retryButton.gameObject.SetActive(true);
         retryButton.onClick.AddListener(OnRetryClicked);
     }

@@ -29,6 +29,12 @@ public class StoneGrowerControl : MonoBehaviour
         for (int i = 0; i < tileDataList.Count; i++)
             tileDataMap[tileDataList[i].tile] = tileDataList[i];
         movement.OnLoopClosed += HandleLoopClosed;
+        menu.Died += OnDeath;
+    }
+
+    void OnDeath()
+    {
+        Destroy(gameObject);
     }
 
     void OnDestroy()
@@ -70,7 +76,7 @@ public class StoneGrowerControl : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<PlayerMovement>() != null)
+        if (other.GetComponent<PlayerMovement>() != null && menu.playing)
         {
             menu.EndGame();
             Destroy(gameObject);
