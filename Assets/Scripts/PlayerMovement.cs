@@ -134,8 +134,8 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        // Always move at full speed regardless of tile
-        transform.position += (mouseWorld - transform.position).normalized * baseSpeed * Time.deltaTime;
+        // Apply speed multiplier from tile (player slows on stone)
+        transform.position += (mouseWorld - transform.position).normalized * baseSpeed * speedMultiplier * Time.deltaTime;
 
         Vector2 pos = transform.position;
 
