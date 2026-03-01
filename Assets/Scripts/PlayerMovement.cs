@@ -70,6 +70,13 @@ public class PlayerMovement : MonoBehaviour
             GameObject musicGO = new GameObject("MusicPlayer");
             musicGO.AddComponent<SimpleMusicPlayer>();
         }
+        
+        // Ensure WebGL setup runs
+        if (FindFirstObjectByType<WebGLSetup>() == null)
+        {
+            GameObject webglGO = new GameObject("WebGLSetup");
+            webglGO.AddComponent<WebGLSetup>();
+        }
     }
 
     void Start()
